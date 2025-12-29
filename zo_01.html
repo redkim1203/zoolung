@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>주렁주화 & 여권 안내 | 주렁주렁</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="주렁주렁 주렁주화와 탐험가 여권(패스포트) 안내 페이지입니다. QR 코드를 통해 주렁주화 사용법과 여권 시스템을 확인해 보세요." />
+  <style>
+    :root {
+      /* 전체 톤을 '숲' 느낌의 그린 계열로 변경 */
+      --primary: #3c7f4a;        /* 메인 포인트 그린 */
+      --primary-soft: #e3f3e8;   /* 연한 그린 배경 */
+      --accent-orange: #ff9b4a;  /* 보조 주황 (필요 시) */
+      --text: #222;
+      --muted: #777;
+      --bg: #f7fbf7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* 헤더 & 네비게이션 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(247, 251, 247, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #dde8df;
+    }
+    .nav {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .nav-logo span {
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e1f2e5;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 14px;
+      font-size: 0.88rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-menu a {
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    .nav-menu a:hover {
+      background: var(--primary-soft);
+    }
+    .nav-cta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* 버튼 */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 18px rgba(60, 127, 74, 0.28);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(60, 127, 74, 0.32);
+    }
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary-soft);
+    }
+    .btn-outline:hover {
+      background: var(--primary-soft);
+    }
+
+    /* 기본 레이아웃 */
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    section {
+      padding: 40px 0;
+    }
+    .section-header {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    /* 히어로 영역 */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr; /* 단일 컬럼으로 변경 */
+      gap: 24px;
+      align-items: center;
+      padding-top: 28px;
+    }
+    .hero-title {
+      font-size: 2.05rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      letter-spacing: -0.04em;
+    }
+    .hero-title span {
+      color: var(--primary);
+    }
+    .hero-sub {
+      font-size: 0.98rem;
+      color: #4c5c4f;
+      margin-bottom: 18px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    /* 그리드 & 카드 공통 */
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 18px 20px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.03);
+      font-size: 0.9rem;
+      border: 1px solid #e1ecdd;
+    }
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e9f5ec;
+      color: #3c7f4a;
+      margin-bottom: 6px;
+    }
+    .card-caption {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* 단계 가이드 */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .step {
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+      border: 1px solid #dde8df;
+    }
+    .step-num {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: #2f6240;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    /* 하이라이트 박스 */
+    .highlight-box {
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      background: #edf4ee;
+      border: 1px dashed #c0d9c7;
+      font-size: 0.88rem;
+    }
+    .highlight-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #355c3f;
+    }
+
+    /* 키워드 pill 배열 (이미지 느낌) */
+    .keyword-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .keyword-pill {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px dashed #b6d4bd;
+      background: #f2f8f3;
+      font-size: 0.85rem;
+      color: #34563d;
+      white-space: nowrap;
+    }
+
+    /* FAQ */
+    .faq-list {
+      max-width: 780px;
+    }
+    .faq-item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.02);
+      border: 1px solid #dde8df;
+    }
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .faq-q::before {
+      content: "Q.";
+      color: var(--primary);
+      margin-right: 6px;
+    }
+    .faq-a::before {
+      content: "A.";
+      color: #bbb;
+      margin-right: 6px;
+    }
+
+    /* CTA */
+    .cta-box {
+      background: linear-gradient(135deg, #3c7f4a, #6fbf86);
+      border-radius: 22px;
+      padding: 24px 20px;
+      color: #f7fbf7;
+      text-align: center;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+    }
+    .cta-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      letter-spacing: -0.04em;
+    }
+    .cta-sub {
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    footer {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 22px 0 0;
+    }
+
+    /* 반응형 */
+    @media (max-width: 900px) {
+      .nav-menu {
+        display: none;
+      }
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+      .grid-3 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 560px) {
+      main { padding-inline: 16px; }
+      .grid-3,
+      .grid-4,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+      .hero-title {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="nav-logo">
+        주렁주렁
+        <span>주렁주화 & 여권 안내</span>
+      </div>
+      <nav class="nav-menu">
+        <a href="#about-world">주렁 숲 이야기</a>
+        <a href="#coin">주렁주화</a>
+        <a href="#passport">탐험가 여권</a>
+        <a href="#flow">함께 쓰는 방법</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#coin" class="btn btn-outline">주렁주화 보기</a>
+        <a href="#passport" class="btn btn-primary">여권 안내</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div>
+        <h1 class="hero-title">
+          <span>주렁주화</span>를<br />조금 더 특별하게 즐기는 방법
+        </h1>
+        <p class="hero-sub">
+          주렁주렁은 단순한 실내동물원이 아니라,<br />
+          아이가 생명을 배우고 마음을 나누는 숲입니다.<br />
+          주렁주화와 탐험가 여권은 이 숲을 여행하는<br />
+          탐험가의 발자국을 남기는 도구예요.
+        </p>
+        <div class="hero-actions">
+          <a href="#coin" class="btn btn-primary">주렁주화부터 알아보기</a>
+          <a href="#passport" class="btn btn-outline">탐험가 여권 살펴보기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 주렁 숲 세계관 소개 -->
+    <section id="about-world">
+      <div class="section-header">
+        <h2 class="section-title">주렁주렁은 어떤 곳인가요?</h2>
+        <p class="section-sub">
+          도심 속에 숨겨진 작은 숲, 생명의 나무가 있는 세계에서 탐험이 시작됩니다.
+        </p>
+      </div>
+      <p style="font-size:0.95rem;">
+        주렁주렁은 동물을 <strong>“그냥 보는 곳”</strong>이 아니라,<br />
+	탐험가가 되어 생명과 배려를 몸으로 배우는 숲입니다.<br />
+        주렁주렁 숲에 들어오는 순간, 고객은 <strong>'탐험가'</strong>가 되고,<br />
+	직원은 단순 안내자가 아닌 <strong>'주렁맨'</strong>(숲의 가이드)이 됩니다.<br />
+        이 숲의 중심에는 탐험가의 마음을 느끼는 <strong>생명의 나무</strong>가 있고,<br />
+	좋은 행동이 모이면 나무는 감사의 선물로 <strong>주렁주화</strong>를 건네줍니다.<br />
+        주렁주화와 탐험가 여권은 이 세계관을 실제 체험으로 연결해 주는 장치입니다.
+      </p>
+
+      <!-- 키워드 4개 pill 스타일 -->
+      <div class="keyword-pills">
+        <div class="keyword-pill">주렁주렁 숲</div>
+        <div class="keyword-pill">생명의 나무</div>
+        <div class="keyword-pill">탐험가(고객)</div>
+        <div class="keyword-pill">주렁맨(직원)</div>
+      </div>
+    </section>
+
+    <!-- 주렁주화 소개 -->
+    <section id="coin">
+      <div class="section-header">
+        <h2 class="section-title">주렁주화, 어떤 동전인가요?</h2>
+        <p class="section-sub">
+          “생명을 소중히 여기는 따뜻한 마음이 모여 태어난 약속의 동전.”
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-tag">정의</div>
+          <div class="card-title">마음이 남는 동전</div>
+          <p>
+            주렁주화는 단순한 보상이나 포인트가 아닙니다.
+	    탐험가가 보여준 배려, 존중, 책임감이
+	    기록되고 기억되는 <strong>약속의 증표</strong>입니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-tag">역할</div>
+          <div class="card-title">좋은 행동을 키우는 도구</div>
+          <p>
+            동물 생명을 존중하고, 조용히 관찰하는 행동처럼 따뜻한 마음이 담긴 모습을 발견했을 때,
+	    주렁맨이<strong>생명의 나무</strong>를 대신해 주렁주화를 건넵니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-tag">효과</div>
+          <div class="card-title">가족이 함께 만드는 추억</div>
+          <p>
+            주렁주화를 함께 모으는 여정 속에서 생명의 소중함을 배우고, <strong>가족의 탐험 순간은 추억</strong>으로 이어집니다.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;" class="highlight-box">
+        <div class="highlight-title">주렁주화로 무엇을 할 수 있나요?</div>
+        <ul style="list-style:none; padding-left:0; font-size:0.9rem;">
+          <li>• 동물 먹이 체험에 참여하기</li>
+          <li>• 주렁주렁 동물 띠부씰(스티커) 뽑기 / 수집하기</li>
+          <li>• 작은 굿즈나 체험권으로 교환하기</li>
+          <li>• 동물 친구에게 편지 쓰고, 기부 프로그램에 참여하기</li>
+          <li>• 모은 주화를 상위 등급의 주화로 업그레이드하기 (지점별 운영 정책에 따름)</li>
+        </ul>
+        <p class="card-caption">
+          ※ 실제 사용처와 필요 개수는 지점과 시즌에 따라 조금씩 달라질 수 있어요.  
+          현장에서 주렁맨에게 지금 가능한 체험을 꼭 물어봐 주세요.
+        </p>
+      </div>
+    </section>
+
+    <!-- 여권 소개 -->
+    <section id="passport">
+      <div class="section-header">
+        <h2 class="section-title">탐험가 여권은 무엇인가요?</h2>
+        <p class="section-sub">
+          주렁 숲을 여행하는 탐험가에게 발급되는, “나는 주렁주렁의 가족이야”를 증명하는 여권입니다.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-tag">역할놀이</div>
+          <div class="card-title">“나는 진짜 탐험가야!”</div>
+          <p>
+            아이는 자신만의 여권을 받는 순간,  
+            단순 방문객이 아니라 <strong>주렁 숲의 정식 탐험가</strong>가 됩니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-tag">기록</div>
+          <div class="card-title">성장을 남기는 기록책</div>
+          <p>
+            방문 도장, 특별 스탬프, 띠부 스티커, 사진이  
+            아이의 성장 시기를 그대로 담는 <strong>추억 앨범</strong>이 됩니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-tag">미래</div>
+          <div class="card-title">주렁 숲 밖에서도 이어지는 탐험 (개발중)</div>
+          <p>
+            앞으로 온라인과 연결되어, 주렁주렁에서의 탐험 기록이 계속 이어지는
+	    <strong>여권 전용 기능</strong>이 열립니다.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;" class="highlight-box">
+        <div class="highlight-title">탐험가 여권으로 무엇을 할 수 있나요?</div>
+        <ul style="list-style:none; padding-left:0; font-size:0.9rem;">
+          <li>• 방문할 때마다 <strong>입국 도장</strong>으로 추억이 쌓여요.</li>
+          <li>• 지점 투어 스탬프를 모으면 <strong>특별한 칭호와 선물</strong>을 받을 수 있어요.</li>
+          <li>• 주렁주화 환전소에서 <strong>조금 더 좋은 조건</strong>으로 교환받을 수 있어요.</li>
+          <li>• 띠부씰로 나만의 <strong>주렁 숲 장면</strong>을 꾸밀 수 있어요.</li>
+	  <li>• 온라인과 연결되어 주렁주화를 <strong>저축하고 사용하는 기능</strong>이 열립니다. (예정) </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 함께 쓰는 방법 / 흐름 -->
+    <section id="flow">
+      <div class="section-header">
+        <h2 class="section-title">주렁주화와 여권, 이렇게 함께 써보세요</h2>
+        <p class="section-sub">
+          입장부터 퇴장까지, 아이의 하루가 하나의 이야기처럼 이어집니다.
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <strong>입장 & 여권 받기</strong><br />
+          주렁주렁 입장 시 여권을 구매하거나 보여주면,  
+          입국 도장을 받고, 탐험가 정보 페이지에 사진과 이름을 채웁니다.
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <strong>주렁주렁 숲 탐험 & 주렁주화 모으기</strong><br />
+          동물을 조용히 관찰하고, 안내를 잘 듣고,  
+          배려 있는 행동을 보이면 생명의 나무 대신 주렁맨이 주렁주화를 건넵니다.
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <strong>체험 & 띠부씰 수집</strong><br />
+          모은 주렁주화를 먹이 체험, 뽑기, 굿즈 등에 사용하고,  
+          띠부씰을 모아 여권의 들판·정글·물속 페이지를 꾸밉니다.
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <strong>기록 & 다음 탐험 준비</strong><br />
+          채워진 스탬프와 동물 띠부씰을 함께 넘겨보며, “다음에는 어떤 동물을 만나러 올까?”를 가족과 함께 이야기해 보세요.
+        </div>
+      </div>
+     
+    </section>
+
+    <!-- 여권 사용법 (추후 상세 업데이트 영역) -->
+    <section id="passport-howto">
+      <div class="section-header">
+        <h2 class="section-title">탐험가 여권 사용법 (곧 업데이트)</h2>
+        <p class="section-sub">
+          여권 안의 페이지를 하나씩 소개하는 상세 가이드는 순차적으로 추가될 예정입니다.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-tag">예정 01</div>
+          <div class="card-title">탐험가 정보 & 입국 도장</div>
+          <p>
+            사진, 이름, 생일을 남기는 페이지와  
+            방문할 때마다 찍는 입국 도장 사용법이 안내될 예정입니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-tag">예정 02</div>
+          <div class="card-title">사증 & 스페셜 스탬프</div>
+          <p>
+            생일, 시즌 이벤트, 특별 체험 등  
+            특별한 날을 남기는 사증 페이지 설명이 추가될 예정입니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-tag">예정 03</div>
+          <div class="card-title">스탬프 투어 & 환전소</div>
+          <p>
+            지점별 스탬프 투어, 주렁주화 환전소 페이지,  
+            여권 보유자 전용 혜택 가이드를 준비 중입니다.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;" class="highlight-box">
+        <div class="highlight-title">업데이트 안내</div>
+        <p>
+          여권 사용법 자세한 내용은 주렁주렁 현장과 온라인 채널을 통해  
+          순차적으로 안내될 예정입니다.  
+                 </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="section-header">
+        <h2 class="section-title">자주 묻는 질문</h2>
+        <p class="section-sub">
+          현장에서 가장 많이 나오는 질문을 모았습니다. 자세한 내용은 지점별 안내를 참고해 주세요.
+        </p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">주렁주화는 어디에서 받을 수 있나요?</div>
+          <div class="faq-a">
+            탐험 중 바람직한 행동을 보였을 때, 또는 특정 체험 프로그램을 이용할 때
+            주렁맨이 생명의 나무를 대신해 주렁주화를 전달합니다.  
+            자세한 지급 기준은 지점별 운영 안내를 참고해 주세요.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">여권이 없어도 주렁주화를 사용할 수 있나요?</div>
+          <div class="faq-a">
+            여권이 없어도 기본 체험은 이용할 수 있지만,  
+            여권을 가지고 있으면 주렁주화를 기록하고,  
+            일부 체험에서 더 유리한 조건으로 사용할 수 있습니다.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">여권은 유료인가요? 유효기간이 있나요?</div>
+          <div class="faq-a">
+            탐험가 여권은 유료로 발급되며, 일정 기간(예: 1년)의 유효기간을 가집니다.  
+            이는 단순 상품 판매가 아니라, 탐험가로서 활동하는 시즌을
+            명확히 기록하기 위한 장치입니다.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">지점이 달라도 여권과 주렁주화를 같이 사용할 수 있나요?</div>
+          <div class="faq-a">
+            기본 구조는 모든 지점이 하나의 숲으로 연결되도록 설계되어 있지만,  
+            각 지점의 운영 방식·이벤트에 따라 일부 혜택은 다를 수 있습니다.  
+            정확한 사용 가능 여부는 방문하신 지점의 안내를 확인해 주세요.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">주렁주화로 교환 가능한 상품과 체험은 어디에서 확인하나요?</div>
+          <div class="faq-a">
+            매장 내 <strong>주렁주화 안내판</strong>과 <strong>환전소</strong>,  
+            그리고 이 페이지의 추후 업데이트를 통해 안내될 예정입니다.  
+            당일 가능한 옵션은 반드시 현장 주렁맨에게 다시 한 번 확인해 주세요.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="join">
+      <div class="cta-box">
+        <div class="cta-title">우리 아이의 숲 탐험, 주렁주화와 여권에 남겨보세요</div>
+        <div class="cta-sub">
+          오늘 모은 주렁주화와 도장 하나가,<br />
+          내일은 아이의 추억이 됩니다.<br />
+          다음 방문 때는, 여권을 꼭 들고 다시 놀러 오세요.
+        </div>
+        <a href="#passport" class="btn btn-primary" style="background:#f7fbf7;color:#2f6240;box-shadow:none;">
+          탐험가 여권 자세히 보기
+        </a>
+        <p style="font-size:0.8rem; margin-top:8px; opacity:0.9;">
+          실제 여권 구매, 주렁주화 지급·교환은 현장 카운터(주렁맨)를 통해 진행됩니다.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      © 주렁주렁. 주렁 숲의 모든 이야기는 이곳에서부터 시작됩니다.
+    </footer>
+  </main>
+</body>
+</html>
